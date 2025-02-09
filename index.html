@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine's Card Flip</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Estilo del botón */
+    .small-button {
+      position: fixed; /* Fijo en la pantalla */
+      bottom: 20px; /* Colócalo 20px por encima del borde inferior */
+      left: 50%; /* Centrado horizontalmente */
+      transform: translateX(-50%); /* Alineación exacta al centro */
+      padding: 5px 10px;
+      font-size: 12px;
+      background-color: white;
+      border: 1px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000; /* Asegura que esté encima de todo */
+    }
+
+    /* Estilo para el mensaje */
+    .message {
+      display: none; /* Oculto por defecto */
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      background-color: pink;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    /* Estilo para la carta */
+    .card, .text-container {
+      display: block;
+    }
+
+    /* Página en blanco (oculta inicialmente) */
+    .hidden-section {
+      display: none; 
+      width: 100%;
+      height: 100vh;
+      background-color: #e94cad;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 500; /* Asegúrate de que esté encima de todo */
+    }
+
+    /* Contenedor de la calculadora */
+    .calculator-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .calculator {
+      background-image: url('OIP-removebg-preview.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 200px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .calculator input {
+      width: 80%;
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      text-align: center;
+    }
+
+    .calculator button {
+      padding: 5px 10px;
+      border: none;
+      background-color: #d33ed3;
+      color: hwb(0 93% 4%);
+      font-size: 14px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    /* Estilo para la imagen en la página 2 */
+    #page2Section img {
+      display: block;
+      margin: 0 auto 50px;
+      max-width: 10%; /* Ajuste el tamaño de la imagen */
+      height: auto;
+    }
+
+    #page2Section img {
+      max-width: 50%;
+      height: auto;
+    }
+
+    /* Clase para activar la sección de la página 2 */
+    #page2Section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Primera sección (Tarjeta) -->
+<div class="envelope"></div>
+
+<div class="card" id="card1">
+  <div class="back"></div>
+  <div class="front">
+    <div class="f-box">
+      <img src="https://assets.codepen.io/4927073/ValCard.png" alt="">
+    </div>
+
+    <p>Para mi bebé</p>
+  </div>
+               Te amo
+  <div class="text-container">
+    En ocasiones, hay cosas que por más claras que sean, son tan borrosas y confusas. En esos momentos, es necesario acudir a respuestas o recordatorios para que jamás desaparezca lo que es importante. He soñado que te tengo en mis brazos, un sueño que acudo cada anochecer, cuando no estoy bien. Es mi dosis de medicina, el oasis en mi desierto. <br>
+    Sin mi brujula, quedo varado, me siento perdido, cuando regresa, mi mundo gira nuevamente. 
+    <p></p>
+  </div>
+</div>
+
+<!-- Sección de la imagen en la página 2 -->
+<div id="page25Section">
+  <img src="amor.png" alt="Amor">
+</div>
+
+<!-- Mensaje que aparecerá al presionar el botón -->
+<div class="message" id="message">
+  Te adoro mucho mi niña, con cariño, tu novio.
+</div>
+
+<!-- Sección de la calculadora -->
+<div class="hidden-section" id="hiddenSection">
+  <div class="calculator-container">
+    <div class="calculator">
+      <input type="text" id="name1" placeholder="Tu nombre">
+      <input type="text" id="name2" placeholder="Nombre de tu amor">
+      <button onclick="displayInfinity()">Calcular amor</button>
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Botón fijo y centrado -->
+<button class="small-button" onclick="handleButtonClick()">¿Somos almas gemelas?</button>
+
+<!-- Audio para música -->
+<audio autoplay>
+  <source src="Lejos de ti.mp3" type="audio/mpeg">
+  Tu navegador no soporta el elemento de audio.
+</audio>
+
+<!-- Script para manejar los clics -->
+<script>
+  let clickCount = 0;
+
+  function handleButtonClick() {
+    const message = document.getElementById('message');
+    const hiddenSection = document.getElementById('hiddenSection');
+    const card1 = document.getElementById('card1');
+    const page2Section = document.getElementById('page2Section'); // Sección de la imagen
+
+    clickCount++; // Incrementar contador de clics
+
+    // Mostrar mensaje si el contador de clics es 1
+    if (clickCount === 1) {
+      message.style.display = 'block'; // Mostrar mensaje
+      card1.style.display = 'none'; // Ocultar la carta
+      setTimeout(function() {
+        message.style.display = 'none';
+      }, 4000);
+    }
+
+    // Redirigir a la página en blanco si el contador de clics es 2
+    if (clickCount === 2) {
+      hiddenSection.style.display = 'block'; // Mostrar página en blanco
+      page2Section.classList.add('active'); // Mostrar la imagen en la página 2
+    }
+
+    // Ciclo para regresar a la carta
+    if (clickCount > 2) {
+      clickCount = 0; // Reinicia el contador
+      card1.style.display = 'block'; // Regresar a la carta
+      hiddenSection.style.display = 'none'; // Ocultar la página en blanco
+      page2Section.classList.remove('active'); // Ocultar la imagen en la página 2
+    }
+  }
+
+  function displayInfinity() {
+    const name1 = document.getElementById('name1').value;
+    const name2 = document.getElementById('name2').value;
+    const result = document.getElementById('result');
+
+    if (name1 && name2) {
+      result.textContent = `El amor de ${name1} y ${name2} nos convierte en almas gemelas. ∞ ❤ `;
+    } else {
+      result.textContent = 'Por favor, ingresa ambos nombres.';
+    }
+  }
+</script>
+
+</body>
+</html>
